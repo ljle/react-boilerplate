@@ -1,4 +1,5 @@
 const path = require('path')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
@@ -12,7 +13,7 @@ const PATH_DIST = path.join(__dirname, './dist')
 // `webpack --env.production` sets env.production = true
 // `webpack --env.a = b` sets env.a = 'b'
 // https://webpack.js.org/configuration/configuration-types#exporting-a-function
-module.exports = (env) => {
+module.exports = env => {
   const { environment } = env
   const isProduction = environment === 'production'
   const isDevelopment = environment === 'development'
@@ -45,8 +46,8 @@ module.exports = (env) => {
       // errors or warnings.
       overlay: {
         errors: true,
-        warnings: true,
-      },
+        warnings: true
+      }
     },
 
     // The point or points to enter the application. This is where Webpack will
@@ -61,7 +62,7 @@ module.exports = (env) => {
     // https://webpack.js.org/configuration/output#output-filename
     output: {
       path: PATH_DIST,
-      filename: 'js/[name].[hash].js',
+      filename: 'js/[name].[hash].js'
     },
 
     // Determine how the different types of modules will be treated.
@@ -89,29 +90,29 @@ module.exports = (env) => {
                     useBuiltIns: 'usage',
 
                     // Specify the core-js version. Must match the version in package.json
-                    corejs: 3,
+                    corejs: 3
 
                     // Specify which environments we support/target for our project.
                     // (We have chosen to specify targets in .browserslistrc, so there
                     // is no need to do it here.)
                     // targets: "",
-                  },
+                  }
                 ],
-                '@babel/preset-react',
+                '@babel/preset-react'
               ],
               // Only run React Fast Refresh plugin in dev mode
-              ...(isDevelopment && { plugins: ['react-refresh/babel'] }),
-            },
-          },
-        },
-      ],
+              ...(isDevelopment && { plugins: ['react-refresh/babel'] })
+            }
+          }
+        }
+      ]
     },
     plugins: [
       // This plugin will generate an HTML5 file that imports all our Webpack
       // bundles using <script> tags. The file will be placed in `output.path`.
       // https://github.com/jantimon/html-webpack-plugin
       new HtmlWebpackPlugin({
-        template: path.join(PATH_SOURCE, './index.html'),
+        template: path.join(PATH_SOURCE, './index.html')
       }),
 
       // This plugin will delete all files inside `output.path` (the dist directory),
@@ -120,7 +121,7 @@ module.exports = (env) => {
       new CleanWebpackPlugin(),
 
       // Only run React Fast Refresh plugin in dev mode
-      ...(isDevelopment ? [new ReactRefreshWebpackPlugin({ disableRefreshCheck: true })] : []),
-    ],
+      ...(isDevelopment ? [new ReactRefreshWebpackPlugin({ disableRefreshCheck: true })] : [])
+    ]
   }
 }
